@@ -1,0 +1,8 @@
+{
+    "host": "localhost",
+    "ports": {
+        "min": 0,
+        "max": 49151
+    },
+    "limit": 5
+}
