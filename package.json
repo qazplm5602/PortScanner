@@ -1,0 +1,12 @@
+{
+  "name": "portscanner",
+  "version": "1.0.0",
+  "description": "그냥 할꺼 없어서 만들어봄</br> ~~내 RDP도 포트 바꾸는데 누가 스캔떠서 요청 자꾸 보냄~~",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
