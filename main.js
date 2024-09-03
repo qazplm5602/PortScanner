@@ -1,5 +1,12 @@
 const config = require("./config.json");
 const net = require("net");
+const fs = require("fs");
+
+// 로그 클리어
+console.log("[domi Port-Scanner] 로그 초기화 중입니다.");
+const successStream = fs.createWriteStream(config.logs.success);
+const failStream = fs.createWriteStream(config.logs.fail);
+
 
 const waitPorts = {};
 console.log("[domi Port-Scanner] 시도할 포트를 확인하고 있습니다.");
@@ -12,6 +19,12 @@ console.log(`[domi Port-Scanner] 총 ${Object.keys(waitPorts).length}개를 확�
 function checkProcessPort() {
     const processCount = Object.values(waitPorts).reduce((prev, current) => current ? prev + 1 : prev, 0);
     if (processCount >= config.limit) return; // 너무 많아
+
+    if (Object.values(waitPorts).length === 0) { // 다 끝남
+        successStream.close();
+        failStream.close();
+        return;
+    }
     
     // 포트 고르기
     const portData = Object.entries(waitPorts).find(v => v[1] === false);
@@ -49,6 +62,12 @@ function checkProcessPort() {
 
 function endConnect(port, success) {
     console.log(`[domi Port-Scanner] ${port} ${success ? "\x1b[32m통과" : "\x1b[31m실패"}\x1b[0m`);
+    
+    // 로그
+    if (success)
+        successStream.write(`${port}\n`);
+    else 
+        failStream.write(`${port}\n`);
 
     delete waitPorts[port];
     checkProcessPort();

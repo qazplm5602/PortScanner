@@ -6,4 +6,8 @@
     },
     "timeout": 1000,
     "limit": 5
+    "logs": {
+        "success": "./logs/ok.txt",
+        "fail": "./logs/fail.txt"
+    }
 }
